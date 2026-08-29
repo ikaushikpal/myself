@@ -282,15 +282,17 @@ themeButton.addEventListener('click', () => {
 /*==================== CONTACT FORM HANDLER ====================*/
 const contactForm = document.getElementById('contact-form');
 const contactStatus = document.getElementById('contact-status');
+const contactSubmitBtn = document.getElementById('contact-submit');
 
 if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
 
         const name = document.getElementById('contact-name').value.trim();
         const email = document.getElementById('contact-email').value.trim();
         const subject = document.getElementById('contact-subject').value.trim() || `Portfolio Contact from ${name}`;
         const message = document.getElementById('contact-message').value.trim();
+        const accessKey = document.getElementById('web3forms-key')?.value.trim();
 
         if (!name || !email || !message) {
             if (contactStatus) {
@@ -301,18 +303,66 @@ if (contactForm) {
             return;
         }
 
-        const bodyContent = `Hi Kaushik,\n\n${message}\n\n---\nSender: ${name}\nEmail: ${email}`;
+        // If Web3Forms Access Key is provided, submit via API directly
+        if (accessKey && accessKey !== '') {
+            try {
+                if (contactSubmitBtn) {
+                    contactSubmitBtn.disabled = true;
+                    contactSubmitBtn.innerHTML = 'Sending... <i class="uil uil-spinner-alt button__icon"></i>';
+                }
+
+                const formData = new FormData(contactForm);
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    contactStatus.style.display = 'block';
+                    contactStatus.className = 'contact__status contact__status--success';
+                    contactStatus.innerHTML = '<i class="uil uil-check-circle"></i> Thank you! Your message has been sent successfully.';
+                    contactForm.reset();
+                } else {
+                    throw new Error(result.message || 'Submission failed');
+                }
+            } catch (error) {
+                contactStatus.style.display = 'block';
+                contactStatus.className = 'contact__status contact__status--error';
+                contactStatus.innerHTML = '<i class="uil uil-exclamation-triangle"></i> Failed to send via API. Please use the direct email link below.';
+            } finally {
+                if (contactSubmitBtn) {
+                    contactSubmitBtn.disabled = false;
+                    contactSubmitBtn.innerHTML = 'Send Message <i class="uil uil-message button__icon"></i>';
+                }
+            }
+            return;
+        }
+
+        // Fallback: Direct Web Gmail and Default Mail App links
+        const bodyContent = `Hi Kaushik,\n\n${message}\n\n---\nFrom: ${name}\nEmail: ${email}`;
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=iamkaushik2014@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyContent)}`;
         const mailtoUrl = `mailto:iamkaushik2014@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyContent)}`;
+
+        // Open Gmail Web composer directly in new tab or default mail app
+        window.open(gmailUrl, '_blank') || (window.location.href = mailtoUrl);
 
         if (contactStatus) {
             contactStatus.style.display = 'block';
             contactStatus.className = 'contact__status contact__status--success';
-            contactStatus.innerHTML = '<i class="uil uil-check-circle"></i> Opening your email client to send message...';
+            contactStatus.innerHTML = `
+                <div style="display:flex; flex-direction:column; gap:.5rem;">
+                    <div><i class="uil uil-check-circle"></i> Opening message in your email app / Gmail...</div>
+                    <div style="font-size:var(--smaller-font-size); color:var(--text-color);">
+                        Didn't open? Click here to:
+                        <a href="${gmailUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--first-color); font-weight:600; text-decoration:underline; margin: 0 .25rem;">Open in Gmail (Web)</a> or
+                        <a href="${mailtoUrl}" style="color:var(--first-color); font-weight:600; text-decoration:underline; margin-left:.25rem;">Default Mail App</a>
+                    </div>
+                </div>
+            `;
         }
-
-        // Open email client with pre-filled details
-        window.location.href = mailtoUrl;
     });
 }
+
 
 

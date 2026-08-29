@@ -869,28 +869,30 @@
                     </a>
                 </div>
 
-                <form id="contact-form" class="contact__form grid">
+                <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" class="contact__form grid">
+                    <input type="hidden" name="access_key" id="web3forms-key" value="">
+                    <input type="hidden" name="from_name" value="Kaushik Pal Portfolio Contact">
                     <div class="contact__inputs grid">
                         <div class="contact__content">
                             <label for="contact-name" class="contact__label">Name</label>
-                            <input type="text" id="contact-name" name="name" required class="contact__input">
+                            <input type="text" id="contact-name" name="name" required class="contact__input" placeholder="Your name">
                         </div>
                         <div class="contact__content">
                             <label for="contact-email" class="contact__label">Email</label>
-                            <input type="email" id="contact-email" name="email" required class="contact__input">
+                            <input type="email" id="contact-email" name="email" required class="contact__input" placeholder="your.email@example.com">
                         </div>
                     </div>
                     <div class="contact__content">
                         <label for="contact-subject" class="contact__label">Subject</label>
-                        <input type="text" id="contact-subject" name="subject" class="contact__input">
+                        <input type="text" id="contact-subject" name="subject" class="contact__input" placeholder="Project / Opportunity">
                     </div>
                     <div class="contact__content">
                         <label for="contact-message" class="contact__label">Message</label>
                         <textarea name="message" id="contact-message" cols="0" rows="7" required
-                            class="contact__input"></textarea>
+                            class="contact__input" placeholder="Write your message here..."></textarea>
                     </div>
                     <div>
-                        <button type="submit" class="button button--flex contact__submit-btn">
+                        <button type="submit" id="contact-submit" class="button button--flex contact__submit-btn">
                             Send Message <i class="uil uil-message button__icon"></i>
                         </button>
                     </div>
