@@ -279,3 +279,40 @@ themeButton.addEventListener('click', () => {
     }
 })();
 
+/*==================== CONTACT FORM HANDLER ====================*/
+const contactForm = document.getElementById('contact-form');
+const contactStatus = document.getElementById('contact-status');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('contact-name').value.trim();
+        const email = document.getElementById('contact-email').value.trim();
+        const subject = document.getElementById('contact-subject').value.trim() || `Portfolio Contact from ${name}`;
+        const message = document.getElementById('contact-message').value.trim();
+
+        if (!name || !email || !message) {
+            if (contactStatus) {
+                contactStatus.style.display = 'block';
+                contactStatus.className = 'contact__status contact__status--error';
+                contactStatus.textContent = 'Please fill in all required fields (Name, Email, Message).';
+            }
+            return;
+        }
+
+        const bodyContent = `Hi Kaushik,\n\n${message}\n\n---\nSender: ${name}\nEmail: ${email}`;
+        const mailtoUrl = `mailto:iamkaushik2014@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyContent)}`;
+
+        if (contactStatus) {
+            contactStatus.style.display = 'block';
+            contactStatus.className = 'contact__status contact__status--success';
+            contactStatus.innerHTML = '<i class="uil uil-check-circle"></i> Opening your email client to send message...';
+        }
+
+        // Open email client with pre-filled details
+        window.location.href = mailtoUrl;
+    });
+}
+
+
