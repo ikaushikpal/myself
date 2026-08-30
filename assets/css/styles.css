@@ -1362,29 +1362,10 @@ body.dark-theme .leetcode__heatmap-wrap {
     color: var(--text-color-light);
 }
 
+/* lc-badge base — detailed styles below in LEETCODE BADGE CARDS section */
 .lc-badge {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: .4rem;
-    background-color: var(--input-color);
-    border-radius: .4rem;
-    padding: .65rem .75rem;
-    min-width: 5rem;
-    text-align: center;
-}
-
-.lc-badge__img {
-    width: 3.5rem;
-    height: 3.5rem;
-    object-fit: contain;
-}
-
-.lc-badge__name {
-    font-size: var(--smaller-font-size);
-    font-weight: var(--font-medium);
-    color: var(--title-color);
-    line-height: 1.3;
+    background-color: transparent;
+    padding: 0;
 }
 
 @media screen and (max-width: 568px) {
@@ -1821,8 +1802,7 @@ body.dark-theme .extra__tag {
     color: #00c853;
 }
 
-/*==================== LEETCODE BADGE CARDS (CSS) ====================*/
-/* Remove old img-based styles, replace with circle design */
+/*==================== LEETCODE BADGE CARDS (Image-based) ====================*/
 .lc-badge {
     display: flex;
     flex-direction: column;
@@ -1835,43 +1815,30 @@ body.dark-theme .extra__tag {
 
 .lc-badge:hover { transform: translateY(-4px); }
 
-.lc-badge__circle {
-    position: relative;
-    width: 4.5rem;
-    height: 4.5rem;
-    border-radius: 50%;
+.lc-badge__img-wrap {
+    width: 5rem;
+    height: 5rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: .1rem;
+    border-radius: .75rem;
+    background: rgba(255,255,255,.06);
+    border: 1.5px solid rgba(255,255,255,.12);
+    padding: .35rem;
     flex-shrink: 0;
-    border: 2px solid rgba(255,255,255,.15);
+    transition: background .25s, box-shadow .25s;
 }
 
-.lc-badge__emoji {
-    font-size: 1.5rem;
-    line-height: 1;
-    filter: drop-shadow(0 1px 3px rgba(0,0,0,.4));
+.lc-badge:hover .lc-badge__img-wrap {
+    background: rgba(255,185,0,.08);
+    box-shadow: 0 0 14px rgba(255,185,0,.25);
 }
 
-.lc-badge__lc-wrap {
-    position: absolute;
-    bottom: -4px;
-    right: -4px;
-    width: 1.35rem;
-    height: 1.35rem;
-    background: var(--container-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1.5px solid rgba(255,255,255,.2);
-}
-
-.lc-badge__lc-logo {
-    width: .85rem;
-    height: .85rem;
+.lc-badge__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: .4rem;
 }
 
 .lc-badge__name {
@@ -1888,9 +1855,52 @@ body.dark-theme .extra__tag {
     text-align: center;
 }
 
+/*==================== HACKERRANK GOLD BADGES ====================*/
+.hr-badge--gold {
+    background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 50%, #fff8e1 100%);
+    border: 1.5px solid #FFD700;
+    box-shadow: 0 2px 12px rgba(255, 215, 0, 0.25);
+}
+
+body.dark-theme .hr-badge--gold {
+    background: linear-gradient(135deg, #2a2000 0%, #1a1500 50%, #2a2000 100%);
+    border-color: #c8a200;
+    box-shadow: 0 2px 12px rgba(200, 162, 0, 0.3);
+}
+
+.hr-badge__circle--gold {
+    background: linear-gradient(135deg, #FFD700, #FFA500) !important;
+    box-shadow: 0 2px 8px rgba(255, 180, 0, 0.5);
+}
+
+.hr-badge__stars--gold {
+    color: #FFD700;
+    font-size: .85rem;
+    letter-spacing: 1px;
+    text-shadow: 0 0 6px rgba(255, 200, 0, 0.6);
+}
+
 /*==================== CERT CARD LINK ====================*/
 .cert__card {
     position: relative;
+}
+
+/* Certification badge image icon */
+.cert__badge-img-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    min-width: 90px;
+    flex-shrink: 0;
+}
+
+.cert__badge-img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    border-radius: .25rem;
 }
 
 .cert__link {
@@ -1906,6 +1916,11 @@ body.dark-theme .extra__tag {
     flex-shrink: 0;
     margin-left: auto;
     transition: background-color .25s, color .25s, transform .25s;
+}
+
+.cert__link--download {
+    background-color: var(--first-color-lighter);
+    color: var(--first-color);
 }
 
 .cert__link:hover {
