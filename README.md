@@ -2,7 +2,7 @@
 
 Personal portfolio website showcasing software engineering projects, work experience, certifications, competitive programming profiles (LeetCode, HackerRank), and technical skills.
 
-🌐 **Live Demo:** [https://ikaushikpal.github.io/myself](https://ikaushikpal.github.io/myself)
+🌐 **Live Demo:** [https://ikaushikpal.github.io](https://ikaushikpal.github.io)
 
 ---
 
@@ -57,7 +57,7 @@ To view the website locally:
 
 ```bash
 # Clone the repository
-git clone https://github.com/ikaushikpal/myself.git
+git clone https://github.com/ikaushikpal/ikaushikpal.github.io.git
 
 # Navigate into directory
 cd myself
